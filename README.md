@@ -2,6 +2,9 @@
 
 ![Travis (.org)](https://img.shields.io/travis/:user/:repo.svg?style=flat-square)
 
+[<img src="https://img.shields.io/travis/:user/:repo.svg?style=flat-square">](https://shields.io/#/)
+
+
 Plain text
 
 End a line with two spaces
