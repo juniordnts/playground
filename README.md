@@ -41,9 +41,6 @@ image:
 2. item 2
  i) sub-item 1
  A. sub-sub-item 1
-(@) A list whose numbering
-continues after
-(@) an interruption
 
 - slide bullet 1
 - slide bullet 2
