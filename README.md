@@ -39,8 +39,6 @@ image:
  Continued (indent 4 spaces)
 1. ordered list
 2. item 2
- i) sub-item 1
- A. sub-sub-item 1
 
 - slide bullet 1
 - slide bullet 2
