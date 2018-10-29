@@ -1,5 +1,7 @@
 # Playground
 
+![Travis (.org)](https://img.shields.io/travis/:user/:repo.svg?style=flat-square)
+
 Plain text
 
 End a line with two spaces
