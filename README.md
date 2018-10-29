@@ -9,6 +9,7 @@
 `verbatim code`  
 ~~strikethrough~~  
 > block quote  
+
 <del>tags</del>  
 ###### Header 6  
 - [x] this is an incomplete item [links]()
@@ -45,13 +46,9 @@ Content in the first column | Content in the second column
    1. Item 3a
    1. Item 3b
 
-![GitHub Logo](/images/logo.png)
+![GitHub Logo](https://github.com/images/logo.png)
 Format: ![Alt Text](url)
 
 http://github.com - automatic!
 [GitHub](http://github.com)
-Blockquotes
-As Kanye West said:
 
-> We're living the future so
-> the present is our past.
