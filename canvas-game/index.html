@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>canvas { border: 1px solid #d3d3d3;  background-color: #f1f1f1; margin: 0px auto;}</style>
+</head>
+
+<body onload="startGame()" style="width: 100%; overflow: hidden; text-align: center; margin: 4px 0;">
+
+  <img src="space.png" id="back" style="display: none;">
+
+<script>
+  
+  function startGame() {
+    gamePiece = new playerComponent(30, 30, "nave.png", 185, 185);
+    background = new backgroundGen();
+    canvasArea.start();
+  }
+
+  // =====================================
+
+  var canvasArea = {
+    canvas: document.createElement("canvas"),
+    start: function () {
+      this.canvas.width = 400;
+      this.canvas.height = 400;
+      this.context = this.canvas.getContext("2d");
+      document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+
+      this.interval = setInterval(updateGameArea, 20);
+
+      window.addEventListener('keydown', function (e) {
+        canvasArea.keys = (canvasArea.keys || []);
+        canvasArea.keys[e.keyCode] = (e.type == "keydown");
+      })
+      window.addEventListener('keyup', function (e) {
+        canvasArea.keys[e.keyCode] = (e.type == "keydown");
+      })
+
+    },
+    clear: function () {
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    stop: function () {
+      clearInterval(this.interval);
+    }
+  }
+
+  // =====================================
+
+  function backgroundGen(){
+    this.img = document.getElementById("back");
+    this.width = 800;
+    this.height = 800;
+    this.x = 0;
+    this.y = 0;
+    this.speed = 0;
+    this.angle = 0;
+    this.moveAngle = 0;
+
+    this.update = () => {
+      ctx = canvasArea.context;
+      // ctx.save();
+      var patt = ctx.createPattern(this.img, "repeat");
+      ctx.translate(this.x, this.y);
+      ctx.rect(0, 0, 800, 800);
+      ctx.fillStyle = patt;
+      ctx.fill();
+      // ctx.restore();
+    }
+    this.newPos = (movX, movY) => {
+      this.x -= movX;
+      this.y += movY;
+      console.log(this.x, this.y);
+    }
+  }
+
+  function playerComponent(width, height, imagem, x, y) {
+    this.image = new Image();
+    this.image.src = imagem;
+
+    this.width = width;
+    this.height = height;
+
+    this.speed = 0;
+    this.angle = 0;
+    this.moveAngle = 0;
+
+    this.x = x;
+    this.y = y;
+
+    this.update = function () {
+      ctx = canvasArea.context;
+      ctx.save();
+      ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+      ctx.rotate(this.angle);
+      ctx.drawImage(this.image, this.width / -2, this.height / -2, this.width, this.height);
+      ctx.restore();
+    }
+    this.newPos = function () {
+      this.angle += this.moveAngle * Math.PI / 180;
+      this.x += this.speed * Math.sin(this.angle);
+      this.y -= this.speed * Math.cos(this.angle);
+      
+      background.newPos(this.speed * Math.sin(this.angle), this.speed * Math.cos(this.angle));
+    }
+  }
+
+  // =====================================
+
+  function updateGameArea() {
+      canvasArea.clear();
+
+      gamePiece.moveAngle = 0;
+      gamePiece.speed = 0;
+      gamePiece.image.src = "nave.png";
+      if (canvasArea.keys && canvasArea.keys[37]) { gamePiece.moveAngle = -3; gamePiece.image.src = "naveBurn.png" }
+      if (canvasArea.keys && canvasArea.keys[39]) { gamePiece.moveAngle = 3; gamePiece.image.src = "naveBurn.png" }
+      if (canvasArea.keys && canvasArea.keys[38]) { gamePiece.speed = 3; gamePiece.image.src = "naveBurn.png" }
+      if (canvasArea.keys && canvasArea.keys[40]) { gamePiece.speed = -3; gamePiece.image.src = "naveBurn.png" }
+
+      // background.newPos();
+      background.update();
+      background.x = 0;
+      background.y = 0;
+
+      gamePiece.newPos();
+      gamePiece.update();
+    
+  }
+
+  // =====================================
+
+</script>
+
+</body>
+
+</html>
+
+<!-- -- -- -- -- -- -- -- -- -- -- -- -->

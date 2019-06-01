@@ -1,0 +1,31 @@
+----------------------------
+§§ Projetos
+
+-Cliente
+-Data Inicio
+-Data Fim
+-Valor Total
+-Valor pra Carteira
+-Parcelas
+-Valor Pago
+
+-Teto Dev Team - 60%
+-Teto Diretoria - 18%
+-Teto Astronauta - 22%
+
+-Critério 1
+-Critério 2
+-Critério 3
+
+
+----------------------------
+§§  Astronauta
+
+-Nome
+-Valor na Carteira
+-Valores Retirados + Data
+
+
+-Critério 1
+-Critério 2
+-Critério 3

@@ -1,0 +1,98 @@
+@import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
+
+* {
+	font-family: 'Anonymous Pro', monospace;  
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #11a9e2;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0d86b3), to(#11a9e2));
+	background-repeat: no-repeat;
+	padding: 100px;
+	text-rendering: optimizeLegibility;
+}
+
+.head{
+	width: 100%;
+}
+
+h5 {
+	text-align: center;
+	margin: 10px auto;
+	font: bold 30px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #fff;
+	text-shadow: 
+	0 3px 3px rgba(0, 0, 0, 0.2), 
+	0 5px 5px rgba(0, 0, 0, 0.15);
+}
+
+.box, input{
+	background-color: rgba(0, 0, 0, 0.3);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.15)), to(rgba(0, 0, 0, 0)));
+	width: 500px;
+	margin: 30px auto;
+	padding: 15px;
+	color: rgba(255, 255, 255, 0.75);
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+	border-radius: 6px;
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25), 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.box{
+	display: none;
+	overflow: hidden;
+	overflow-wrap: break-word; 
+}
+#content {
+	flex-wrap: wrap;
+	max-width: 100%;
+	white-space: pre-wrap;
+}
+
+input {
+	border: none;
+	color: white;
+	font-size: 16px;
+	margin: 10px auto;
+	text-align: center;
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+button {
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 500px;
+	background-color: transparent;
+	border: 1px dashed white;
+	border-radius: 6px;
+	color: white;
+	font-size: 18px;
+	padding: 10px;
+	transition: all 0.2s;
+}
+button:hover{
+	transition: all 0.2s;
+	background-color: rgba(0,0,0,0.8);
+}
+
+.reply {
+	width: 500px;
+	margin: 20px auto 0 auto;
+	text-align: center;
+	color: #fff;
+	display: none;
+}
+.erro{
+	color: #9c3b3b;
+}
+.done{
+	color: #54fd4a;
+}
+
+#store{
+	display: none;
+}

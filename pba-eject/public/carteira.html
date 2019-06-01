@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="images/favicon.ico">
+    <title>EJECT - PBA</title>
+    <link href="assets/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/offcanvas.css" rel="stylesheet">
+  </head>
+
+  <style>
+    ::-webkit-scrollbar { width: 10px;}
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #888; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+    html{ overflow-y: scroll; overflow-x: hidden;}
+  </style>
+
+  <body class="bg-light">
+
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">PBA - EJECT</a>
+        <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas"><span class="navbar-toggler-icon"></span></button>
+  
+        <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav mr-auto">
+  
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/carteira">Carteira</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/relatorio">Relatório</a>
+            </li>
+            <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main role="main" class="container">
+
+      <div class="d-flex align-items-center p-3 my-3 text-white-50 badge-secondary rounded box-shadow">
+        <img class="mr-3" src="images/logo.png" alt="" width="48" height="48">
+        <div class="lh-100">
+          <h6 class="mb-0 text-white lh-100">EJECT</h6>
+          <small>Política de Benefício do Astronauta</small>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center p-3 my-3 text-white-50 rounded box-shadow" style="background-color: #979797">
+        <img class="mr-3" src="images/avatar.png" alt="" width="48" height="48">
+        <div class="lh-100">
+          <h6 class="mb-0 text-white lh-100" id="astroName">...</h6>
+          <small id="astroFunc">...</small>
+        </div>
+        <div class="ml-auto" style="text-align: right">
+          <h3><span class="badge" id="astroTotal">...</span></h3>
+        </div>
+      </div>
+
+      <div class="p-3 bg-white rounded box-shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">Atividades Recentes</h6>
+        <div id="astroInfo">
+        </div>
+        <br>
+      </div>
+
+    </main>
+
+
+    <footer class="container">
+      <hr class="featurette-divider">
+      <p>© Jackson - 2018</p>
+    </footer>
+
+
+    <script src="assets/jquery.js"></script>
+    <script src="assets/bootstrap.min.js"></script>
+    <script src="assets/offcanvas.js"></script>
+
+    <script>
+      var meuHost = window.location.protocol + "//" +  window.location.host;
+
+      $.get(meuHost + "/astronauta", function (data, status) {
+        $("#astroName").text(data.nome);
+        $("#astroFunc").text(data.funcao);
+
+        var totalGanho = 0;
+        var totalGasto = 0;
+        data.ganhos.forEach(element => {
+          var html = `
+          <ul class="list-group mb-3 mt-3">
+            <li class="list-group-item d-flex justify-content-between lh-condensed border-success">
+              <div class="text-success">
+                <h6 class="my-0">${element.nome}</h6>
+                <small>${element.data}</small>
+              </div>
+              <span class="text-success">$${element.valor}</span>
+            </li>
+          </ul>
+          `
+          totalGanho += parseInt(element.valor);
+          $("#astroInfo").append(html)
+        });
+        data.retiradas.forEach(element => {
+          var html = `
+          <ul class="list-group mb-3 mt-3">
+            <li class="list-group-item d-flex justify-content-between lh-condensed border-danger">
+              <div class="text-danger">
+                <h6 class="my-0">${element.descricao}</h6>
+                <small>${element.data}</small>
+              </div>
+              <span class="text-danger">-$${element.valor}</span>
+            </li>
+          </ul>
+          `
+          totalGasto += parseInt(element.valor);
+          $("#astroInfo").append(html)
+        });
+        $("#astroTotal").text("R$" + (totalGanho - totalGasto));
+        (totalGanho - totalGasto) > 0 ? $("#astroTotal").addClass("badge-success") : $("#astroTotal").addClass("badge-danger")
+      });
+
+
+
+
+
+
+    function listaTransacoes() {
+
+      $("#carteiras").empty();
+
+      listaDeUsuarios.forEach(user => {
+
+        var ganhos = "";
+        var gastos = "";
+        var totalGanho = 0;
+        var totalGasto = 0;
+
+        user.ganhos.forEach(ganho => {
+          ganhos += `
+          <li><strong>${ganho.nome}</strong></li>  
+            <ul>
+              <li><strong>Valor: </strong>${ganho.valor}</li>
+              <li><strong>Data: </strong>${ganho.data}</li>
+            </ul>
+          `;
+          totalGanho += parseInt(ganho.valor);
+        })
+        user.retiradas.forEach(gasto => {
+          gastos += `
+          <li><strong>${gasto.descricao}</strong></li>  
+            <ul>
+              <li><strong>Valor: </strong>${gasto.valor}</li>
+              <li><strong>Data: </strong>${gasto.data}</li>
+            </ul>
+          `;
+          totalGasto += parseInt(gasto.valor);
+        })
+
+        var html = `
+        <div style="border: 1px solid grey; padding: 10px; margin: 10px 0;">
+          <strong style="background-color: black; color: white; padding: 5px 20px;">${user.nome}</strong>
+          <p><strong>Valor na Carteira: </strong>R$ ${totalGanho - totalGasto}</p>
+          <div style='border: 1px solid green; padding : 5px;'>
+            <strong>Ganhos: </strong>
+            <ul>
+              ${ganhos}
+            </ul>
+          </div>
+          <div style='border: 1px solid red; padding: 5px; margin-top: 10px'>
+            <strong>Gastos: </strong>
+            <ul>
+              ${gastos}
+            </ul>
+          </div>
+        </div>
+        `;
+        $("#carteiras").append(html);
+      });
+    };
+
+
+    </script>
+  </body>
+</html>

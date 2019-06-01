@@ -1,0 +1,5 @@
+{"cliente":"Alecrim (1, 2)","inicio":"2018-09-12","fim":"2018-09-29","total":"2500","parcelas":"3","carteira":750,"pago":[{}],"criterio1":0.77,"criterio2":0.35,"criterio3":1,"devteam":["1","2"],"_id":"8uOaHo412bpVwlXI"}
+{"cliente":"Outro (1, 5)","inicio":"2018-09-06","fim":"2018-09-24","total":"2000","parcelas":"3","carteira":600,"pago":[{}],"criterio1":0.5,"criterio2":0.5,"criterio3":0.5,"devteam":["1","5"],"_id":"CxaBwJpC7DfJNEWV"}
+{"cliente":"POP (1)","inicio":"12/02","fim":"13/02","total":"1485","parcelas":"1","carteira":445.5,"pago":[{}],"criterio1":"0.5","criterio2":"0.5","criterio3":"1","devteam":["1"],"_id":"S0lO4ottzWPT6A7C"}
+{"cliente":"TCM Dist. (2)","inicio":"2018-09-04","fim":"2018-09-25","total":"2100","parcelas":"3","carteira":630,"pago":[{}],"criterio1":0.9,"criterio2":0.3,"criterio3":0.59,"devteam":["2"],"_id":"yT4XRWbINptmM74M"}
+{"cliente":"Proaudio (1, 2, 5)","inicio":"2018-09-29","fim":"2018-09-24","total":"5000","parcelas":"3","carteira":1500,"pago":[{}],"criterio1":0.5,"criterio2":0.5,"criterio3":0.5,"devteam":["1","2","5"],"_id":"zMa7IPqe99Wm7QqF"}

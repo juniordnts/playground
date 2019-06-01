@@ -1,0 +1,408 @@
+
+1.1 - Why jQuery?
+
+	const login = document.getElementById('login');
+	const loginMenu = document.getElementById('loginMenu');
+
+	login.addEventListener('click', () => {
+	  if(loginMenu.style.display === 'none'){
+		loginMenu.style.display = 'inline';
+	  } else {
+		loginMenu.style.display = 'none';
+	  }
+	});
+	
+	
+	$('#login').click(() => {
+	  $('#loginMenu').toggle()
+	});
+	
+	Ambos os códigos acima fazem a mesma coisa. 
+**
+1.4 - Adding jQuery:
+
+	Usa-se essa tag para incluir o jQuery no foot do HTML.
+	
+	<script
+		src="https://code.jquery.com/jquery-3.2.1.min.js"
+		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		crossorigin="anonymous">
+	</script>
+	
+	Disponivel em:
+	https://code.jquery.com/
+**
+1.5 - .ready():
+
+	Pra não ter problemas com o jQuery, temos que esperar a página HTML carregar por inteira. Para isso usamos o metodo .ready() que espera tudo carregar pra poder comecar a rodar os codigos jquery.
+	
+	$(document).ready(() => {
+
+	});
+**
+1.6 - Targeting by Class:
+
+	No exemplo, o document é uma keyword especial pra mirar o documento HTML e criar o objeto jquery.
+	Também podemos usar o $() pra objetos jquery para elementos da pagina. 
+	Tipicamente a gente passa um id, class ou tag para o $().
+	
+	Para mirar um elemento por class usamos um ponto:
+	
+	$('.someClass').handlerMethod();
+	
+	EX.:
+	
+	$(document).ready(() => {
+		$('.product-photo').show();
+	});
+	
+	Todos os class .product-photo (que estão display none) pra block.
+**
+1.7 - Targeting by id:
+
+	Para id, usamos o simbolo #.
+	
+	$(document).ready(() => {
+		$('#nav-dropdown').hide()
+	});
+**
+1.8 - jQuery Objects:
+
+	O $ transforma o elemento alvo em um objeto. Usualmente pode-se salvar esse valor em uma variável. 
+	
+	$(document).ready(() => {
+		const $navDropdown = $('#nav-dropdown');
+	  $navDropdown.hide();
+	});
+	
+	O dolar na frente da variável é só pra o usuario lembrar que se trada de um objeto tag. 
+**
+1.9 - Event Handlers:
+
+	O metodo .on() adiciona um manipulador para o objeto. Ele pega dois parametros, uma declaração string do evento à escutar e uma função retorno quando o evento for detectado. 
+	
+	$(document).ready(() => {
+	  const $menuButton = $('.menu-button');
+	  const $navDropdown = $('#nav-dropdown');
+		
+		$menuButton.on('click', () => {
+		$navDropdown.show();
+	  });
+	});
+**
+2.1 - Introduction:
+
+	$(document).ready(() => {
+	  $('.menu-button').on('click',() => {
+		$('#nav-dropdown').slideToggle('slow');
+	  });
+
+	  $(".arrow-one").on("click", () => {
+		$(".shoe-details-one").toggle();
+	  });
+	  
+	  $(".sizes-one").on("click", () => {
+		$(".text-one").fadeIn(1000);
+	  });
+	  
+	  $(".sizes-two").on("click", () => {
+		$(".text-two").fadeIn();
+	  });
+	});
+**
+2.2 - .hide():
+
+	Esconde o elemento.
+	
+	$(document).ready(() => {
+	  $('.hide-button').on('click', () =>{
+		$('.first-image').hide();
+	  });
+	});
+**
+2.3 - .show():
+
+	Mostra o elemento.
+
+	$('.show-button').on('click', () => {
+		$('.first-image').show();
+	});
+**
+2.4 - .toggle():
+
+	Esconde e mostra o elemento.
+
+	$('.toggle-button').on('click', () => {
+		$('.first-image').toggle();
+	});
+**
+2.5 - fading:
+
+	O tempo em padrão é 400 miliseg.
+
+	  $('.fade-out-button').on('click', () => {
+		$('.fade-image').fadeOut();
+	  });
+	  
+	  $('.fade-in-button').on('click', () => {
+		$('.fade-image').fadeIn(4000);
+	  });
+**
+2.6 - .fadeToggle():
+
+	$('.fade-toggle-button').on('click', () => {
+		$('.fade-image').fadeToggle('fast');
+	});
+	
+	Para ver a sting como argumento:
+	http://api.jquery.com/fadetoggle/
+**
+2.7 - Sliding:
+
+	$('.up-button').on('click', () => {
+		$('.slide-image').slideUp(100);
+	});
+	  
+	$('.down-button').on('click', () => {
+		$('.slide-image').slideDown('slow');
+	});
+	  
+	$('.slide-toggle-button').on('click', () => {
+		$('.slide-image').slideToggle(400);
+	});
+	
+	Para mais:
+	https://api.jquery.com/category/effects/
+**
+3.1 - Introduction to Mouse Events:
+
+	jQuery nos oferece uma coleção de metodos que servem pra:
+		Ouvir um evento, tipo click.
+		Adicionar um efeito visual.
+		
+	Aqui vamos aprender a linkar um evento de usuário à um efeito visual com os manipuladores de evento.
+	
+	Existem duas partes:
+		Event listener.
+		Callback function.
+		
+	
+	$(document).ready(() => {
+		$('.login-button').on('click', () => {
+			$('.login-form').show();
+		})
+	});
+**
+3.2 - On 'mouseenter':
+
+	Quando o mouse entra na área do elemento.
+
+	$('.menu-button').on('mouseenter', () => {
+		$('.nav-menu').show();
+	});
+**
+3.3 - On 'mouseleave':
+
+	Quando o mouse deixa a área do elemento.
+	
+	$('.nav-menu').on('mouseleave', () => {
+		$('.nav-menu').hide()
+	})
+**
+3.4 - Chaining Events:
+	
+	Nós podemos colocar um evento após o outro pro mesmo elemento e economizar codigo. 
+	
+	$('.product-photo').on('mouseenter', () => {
+		$('.product-photo').addClass('photo-active');
+	}).on('mouseleave', () => {
+		$('.product-photo').removeClass('photo-active');
+	});
+**
+3.5 - currentTarget:
+
+	No exemplo anteiror percebemos que o evento acontece pra todas as imagens, mesmo a gente só estando em cima de uma, pois o a classe .product-photo é usada por todas as imagens. 
+	Para não ter q escrever um código pra cada imagem iremos usar o currentTarget e adicionar uma variavel event ao listener.
+	
+	$('.product-photo').on('mouseenter', event => {
+		$(event.currentTarget).addClass('photo-active')
+	}).on('mouseleave', (event) => {
+		$(event.currentTarget).removeClass('photo-active')
+	});
+	
+	Para mais eventos: 
+	http://jqapi.com/
+**
+4.1 - CSS & jQuery:
+
+**
+4.2 - .css():
+
+	Para alterar o css de um elemento, existe o metodo .css() que aceita como argumento duas strings uma com nome da propriedade e outra com valor.
+	
+	$('.example-class').css('color', '#FFFFFF');
+	
+	
+	$('.menu-button').on('mouseenter', () => {
+		$('.nav-menu').show();
+		$('.menu-button').css('color', '#C3FF00');
+	})
+**
+4.3 - CSS II:
+
+	Você também pode passar para o css() uma lista de valores usando o chaves {}.
+	
+	Porém a formatação será diferente. Não pode haver espaço e cada nova primeira letra deve ser maiúscula.
+	
+	$('.example-class').css({
+		backgroundColor: '#000000',
+		fontSize: '20px'
+	})
+	
+	
+	$('.menu-button').css({
+		color: '#EFEFEF',
+		backgroundColor: '#303030',
+	});
+**
+4.4 - .animate():
+
+	Faz um valor CSS mudar sobre um certo tempo.
+	
+	O metodo .animate() recebe dois parametros, um com os novos valores CSS e outro com o tempo (opcional).
+
+	$('.example-class').animate({
+		height: '100px',
+		width: '100px',
+		borderWidth: '10px'
+	}, 500);
+	
+	$('.menu-button').animate({
+      fontSize: '18px',
+    }, 200)
+**
+4.5 - .addClass():
+
+	Pra adicionar classes ao objeto.
+	
+	$('.example-class').addClass('active');
+	
+	$('.menu-button').addClass('button-active');
+**
+4.6 - .removeClass():
+
+	Para remover classes do objeto.
+	
+	$('.example-class').removeClass('active');
+	
+	$('.nav-menu').removeClass('hide');
+**
+4.7 - .toggleClass():
+
+	Para mudar classes do objeto.
+	
+	$('.example-class').toggleClass('active');
+	
+	$('.nav-menu').toggleClass('hide');
+    $('.menu-button').toggleClass('button-active');
+**
+5.1 - The DOM Tree:
+
+	<div class='parent'>
+	  <div class='child' id='sibling1'>
+		<p class='grandchild'></p>
+	  </div>
+	  <div class='child' id='sibling2'></div>
+	  <div class='child' id='sibling3'></div>
+	</div>
+**
+5.2 - Children:
+
+	O metodo .children() pega todos os elementos filhos em primeira instancia de um determinado elemento, se os filhos tiverem outros filhos dentro, o comando não vai pegar. 
+	
+	<div class='parent' id='holder'>
+	  <div>Child <span>1</span></div>
+	  <div>Child <span>2</span></div>
+	  <div>Child <span>3</span></div>
+	</div>
+	
+	const $kids = $('#holder').children();
+	$kids.on('click', event => {
+		$(event.currentTarget).css('border', '1px solid black');
+	});
+	
+	
+	$('.shoe-details').children().removeClass('disabled');
+**
+5.3 - Parent & Siblings:
+
+	Esconde o pai;
+
+	$('.choice').on('click', event => {
+		$(event.currentTarget).parent().hide();
+	});
+	
+	Remove uma classe dos irmaos.
+	
+	$('.choice').on('click', event => {
+		$(this).siblings().removeClass('selected');
+		$(event.currentTarget).addClass('selected');
+	});
+	
+	$(event.currentTarget).siblings().removeClass('active');
+**
+5.4 - Closest:
+
+	Você passa um objeto que está perto. O codigo busca o objeto com esse nome que estiver mais proximo.
+	
+	$('.example-class-one').closest('.another-class');
+	
+	<div class='.another-class'>
+	  <p class='.example-class-one'>1</p>
+	</div>
+	<div class='.another-class'>
+	  <p class='.example-class-two'>2</p>
+	</div>
+	
+	Nesse caso ele vai pegar a DIV com o conteudo 1. 
+**
+5.5 - Next:
+
+	Seleciona a proxima tag.
+	
+	Tambem existe uma .prev() que seleciona a anterior.
+	
+	<div class='heading'>MENU</div>
+	<ol style='display: none'>
+	  <li>Appetizers</li>
+	  <li>Entrees</li>
+	  <li>Salads</li>
+	  <li>Sides</li>
+	  <li>Desserts</li>
+	</ol>
+	
+	const $heading = $('.heading');
+	$heading.on('click', () => {
+		$(event.currentTarget).next().toggle();
+	});
+**
+5.6 - find:
+
+	.find() Serve para selecionar um objeto filho especifico, uma vez que o children iria selecionar todos. 
+	
+	const $items = $('.myList').find('li');
+	
+	
+	$(event.currentTarget).find('img').toggleClass('rotate');
+
+	
+	
+
+	
+
+	
+	
+
+		
+	
+	

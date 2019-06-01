@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="images/favicon.ico">
+    <title>EJECT - PBA</title>
+    <link href="assets/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/offcanvas.css" rel="stylesheet">
+  </head>
+
+  <style>
+    ::-webkit-scrollbar { width: 10px;}
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #888; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+    html{ overflow-y: scroll; overflow-x: hidden;}
+  </style>
+
+  <body class="bg-light">
+
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">PBA - EJECT</a>
+        <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas"><span class="navbar-toggler-icon"></span></button>
+  
+        <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav mr-auto">
+  
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/carteira">Carteira</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/relatorio">Relatório</a>
+            </li>
+            <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="nav-scroller bg-white box-shadow">
+      <div class="container-fluid">
+        <nav class="nav nav-underline">
+          <a class="nav-link" onclick="toggleDash('homeResumo')" href="#">Resumo<span class="badge badge-pill bg-light align-text-bottom">2</span></a>
+          <a class="nav-link" onclick="toggleDash('homeProjeto')" href="#">Inserir Projeto</a>
+          <a class="nav-link" onclick="toggleDash('homePagamento')" href="#">Inserir Pagamento</a>
+          <a class="nav-link" onclick="toggleDash('homeRetirada')" href="#">Inserir Retirada</a>
+          <a class="nav-link" onclick="toggleDash('homeIndices')" href="#">Editar Índices</a>
+        </nav>
+      </div>
+    </div>
+
+    <main role="main" class="container">
+
+
+      <div class="d-flex align-items-center p-3 my-3 text-white-50 badge-secondary rounded box-shadow">
+        <img class="mr-3" src="images/logo.png" alt="" width="48" height="48">
+        <div class="lh-100">
+          <h6 class="mb-0 text-white lh-100">EJECT</h6>
+          <small>Política de Benefício do Astronauta</small>
+        </div>
+      </div>
+
+      <div id="statusMessage"></div>
+      
+      <!-- RESUMO -->
+
+      <div class="collapse show" id="homeResumo">
+        <div>
+          <div class="p-3 bg-white rounded box-shadow">
+            <h6 class="border-bottom border-gray pb-2 mb-0">Atividades Recentes</h6>
+            <div class="media text-muted pt-3">
+              <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
+              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">@username</strong>
+                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+              </p>
+            </div>
+            <small class="d-block text-right mt-3">
+              <a href="#">All updates</a>
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Projeto -->
+
+      <div class="row collapse" id="homeProjeto">
+        <div class="col-md-12">
+          <div class="card card-body">
+            <h3>Inserir Projeto</h3>
+            <form id="inserirProjeto">
+              <div class="row mt-4">
+                <div class="form-group col-md-12">
+                  <label for="">Nome do Cliente:</label>
+                  <input type="text" name="cliente" class="form-control" id="" aria-describedby="" placeholder="">
+                  <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">Data de Início:</label>
+                  <input type="date" name="inicio" class="form-control" id="" placeholder="">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">Data de Término:</label>
+                  <input type="date" name="fim" class="form-control" id="" placeholder="">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">Parcelas:</label>
+                  <input type="number" name="parcela" class="form-control" id="" placeholder="">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">Total:</label>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend"><div class="input-group-text">R$</div></div>
+                    <input type="number" name="total" class="form-control" id="" placeholder="">
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="">Critério 1:</label>
+                  <input oninput="outcrit1.value=parseInt(crit1.value)/100" id="crit1" type="range" name="crit1" min="0" max="100" class="form-control" placeholder="">
+                  <output name="outcrit1" for="crit1">0.5</output>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="">Critério 2:</label>
+                  <input oninput="outcrit2.value=parseInt(crit2.value)/100" id="crit12" type="range" name="crit2" min="0" max="100" class="form-control" placeholder="">
+                  <output name="outcrit2" for="crit2">0.5</output>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="">Critério 3:</label>
+                  <input oninput="outcrit3.value=parseInt(crit3.value)/100" id="crit3" type="range" name="crit3" min="0" max="100" class="form-control" placeholder="">
+                  <output name="outcrit3" for="crit3">0.5</output>
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="">Dev. Team:</label>
+                  <div id="devteam" class="custom-control custom-checkbox pl-4"></div>
+                </div>
+                <div class="form-group col-md-12">
+                  <button type="button" class="btn btn-primary" onclick="inserirProjeto()">Enviar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Pagamento -->
+
+      <div class="row collapse" id="homePagamento">
+        <div class="col-md-12">
+          <div class="card card-body">
+            <h3>Inserir Pagamento</h3>
+            <form id="inserirPagamento">
+              <div class="row mt-4">
+                <div class="form-group col-md-12">
+                  <label for="">Projeto:</label>
+                  <div id="projetos" class="pl-4"></div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">Data do Pagamento:</label>
+                  <input type="date" name="data" class="form-control" id="" placeholder="">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">Valor do Pagamento:</label>
+                  <input type="number" name="valor" class="form-control" id="" placeholder="">
+                </div>
+                <div class="form-group col-md-12">
+                  <button type="button" class="btn btn-primary" onclick="inserirPagamento()">Enviar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Retirada -->
+
+      <div class="row collapse" id="homeRetirada">
+        <div class="col-md-12">
+          <div class="card card-body">
+            <h3>Inserir Retirada</h3>
+            <form id="inserirRetirada">
+              <div class="row mt-4">
+                <div class="form-group col-md-12">
+                  <label for="">Astronauta:</label>
+                  <div id="astronauta" class="pl-4"></div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">Descrição da Retirada:</label>
+                  <input type="text" name="descricao" class="form-control" id="" placeholder="">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">Data da Retirada:</label>
+                  <input type="date" name="data" class="form-control" id="" placeholder="">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">Valor da Retirada:</label>
+                  <input type="number" name="valor" class="form-control" id="" placeholder="">
+                </div>
+                <div class="form-group col-md-12">
+                  <button type="button" class="btn btn-primary" onclick="inserirRetirada()">Enviar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Indices -->
+
+      <div class="row collapse" id="homeIndices">
+        <div class="col-md-12">
+          <div class="card card-body">
+            <h3>Editar Índices</h3>
+            <form id="editarIndices">
+              <div class="row mt-4">
+                <div class="form-group col-md-12">
+                  <label for="">Astronauta:</label>
+                  <div id="indiceAstronauta" class="pl-4"></div>
+                </div>
+
+                <div id="indiceId"></div>
+
+                <div id="criterio1" class="form-group col-md-4"></div>
+                <div id="criterio2" class="form-group col-md-4"></div>
+                <div id="criterio3" class="form-group col-md-4"></div>
+
+                <div class="form-group col-md-12">
+                  <button type="button" class="btn btn-primary" onclick="editarIndice()">Enviar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+
+    </main>
+
+
+    <footer class="container">
+      <hr class="featurette-divider">
+      <p>© Jackson - 2018</p>
+    </footer>
+
+
+    <script src="assets/jquery.js"></script>
+    <script src="assets/bootstrap.min.js"></script>
+    <script src="assets/offcanvas.js"></script>
+
+    <script>
+
+      var meuHost = window.location.protocol + "//" +  window.location.host;
+
+      function toggleDash(item){
+        if (item == 'homeResumo'){
+          $("#homeProjeto").collapse('hide');
+          $("#homePagamento").collapse('hide');
+          $("#homeRetirada").collapse('hide');
+          $("#homeIndices").collapse('hide');
+          $("#homeResumo").collapse('show');
+        }
+        else if (item == 'homeProjeto'){
+          $("#homeResumo").collapse('hide');
+          $("#homePagamento").collapse('hide');
+          $("#homeRetirada").collapse('hide');
+          $("#homeIndices").collapse('hide');
+          $("#homeProjeto").collapse('show');
+        }
+        else if (item == 'homePagamento'){
+          $("#homeResumo").collapse('hide');
+          $("#homeProjeto").collapse('hide');
+          $("#homeRetirada").collapse('hide');
+          $("#homeIndices").collapse('hide');
+          $("#homePagamento").collapse('show');
+        }
+        else if (item == 'homeRetirada'){
+          $("#homeResumo").collapse('hide');
+          $("#homeProjeto").collapse('hide');
+          $("#homePagamento").collapse('hide');
+          $("#homeIndices").collapse('hide');
+          $("#homeRetirada").collapse('show');
+        }
+        else if (item == 'homeIndices'){
+          $("#homeResumo").collapse('hide');
+          $("#homeProjeto").collapse('hide');
+          $("#homePagamento").collapse('hide');
+          $("#homeRetirada").collapse('hide');
+          $("#homeIndices").collapse('show');
+        }
+      }
+
+
+      $(document).ready(loadData());
+      
+      var listaDeProjetos = {};
+      var listaDeUsuarios = {};
+
+      function loadData() {
+
+        $("#devteam").empty();
+        $("#astronauta").empty();
+        $("#projetos").empty();
+
+
+        $.get(meuHost + "/usuarios", function (data, status) {
+          listaDeUsuarios = data;
+          console.log(listaDeUsuarios);
+          $("#devteam").html("");
+          $("#astronauta").html("");
+          $("#indiceAstronauta").html("");
+          data.forEach(user => {
+            var html = `<input class="form-check-input" type="checkbox" name="devteam[]" value="${user._id}">${user.nome}<br>`;
+            $("#devteam").append(html);
+            var html2 = `<input class="form-check-input" type="radio" name="usuario" value="${user._id}">${user.nome}<br>`;
+            $("#astronauta").append(html2);
+            var html3 = `<input class="form-check-input" type="radio" name= "userid" value="${user._id}" onclick="getIndice('${user._id}')">${user.nome}<br>`;
+            $("#indiceAstronauta").append(html3);
+          });
+        });
+
+        $.get(meuHost + "/projetos", function (data, status) {
+          data.forEach(projeto => {
+            listaDeProjetos[projeto._id] = projeto.cliente;
+            var html = `<input class="form-check-input" type="radio" name="projeto" value="${projeto._id}">${projeto.cliente}<br>`;
+            $("#projetos").append(html);
+          });
+        });
+      };
+
+      // ========================================================
+
+      function getIndice(userId){
+        listaDeUsuarios.forEach(function(user){
+
+          // $("#indiceId").html("");
+
+          if (user._id == userId){
+
+            // $("#indiceId").append(`<input type="hidden" name="userid" value="${user._id}">`);
+
+            var htmlCriterio1 = `
+            <label for="">Critério 1:</label>
+            <input oninput="outcrit1.value=parseInt(usercrit1.value)/100" id="usercrit1" type="range" name="crit1" min="0" max="100" class="form-control" placeholder="" value="${user.crit1 * 100}">
+            <output name="outcrit1" for="usercrit1">${user.crit1}</output>
+            `
+            var htmlCriterio2 = `
+            <label for="">Critério 2:</label>
+            <input oninput="outcrit2.value=parseInt(usercrit2.value)/100" id="usercrit2" type="range" name="crit2" min="0" max="100" class="form-control" placeholder="" value="${user.crit2 * 100}">
+            <output name="outcrit2" for="usercrit2">${user.crit2}</output>
+            `
+            var htmlCriterio3 = `
+            <label for="">Critério 3:</label>
+            <input oninput="outcrit3.value=parseInt(usercrit3.value)/100" id="usercrit3" type="range" name="crit3" min="0" max="100" class="form-control" placeholder="" value="${user.crit3 * 100}">
+            <output name="outcrit3" for="usercrit3">${user.crit3}</output>
+            `
+            $("#criterio1").html(htmlCriterio1);
+            $("#criterio2").html(htmlCriterio2);
+            $("#criterio3").html(htmlCriterio3);
+          }
+        });
+      }
+
+      // ========================================================
+
+      function inserirProjeto() {
+        $.post(meuHost + "/api/projetos",
+          $("#inserirProjeto").serialize(),
+          function (data, status) {
+            $("#statusMessage").append(`
+              <div class="alert alert-${status} alert-dismissible fade show" role="alert">
+                <strong>${data}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `);
+            $("#inserirProjeto").trigger("reset");
+            loadData();
+          });
+      }
+
+      function inserirPagamento() {
+        $.post(meuHost + "/api/pagamentos",
+          $("#inserirPagamento").serialize(),
+          function (data, status) {
+            $("#statusMessage").append(`
+              <div class="alert alert-${status} alert-dismissible fade show" role="alert">
+                <strong>${data}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `);
+            $("#inserirProjeto").trigger("reset");
+            loadData();
+          });
+      };
+
+      function inserirRetirada() {
+        $.post(meuHost + "/api/retirada",
+          $("#inserirRetirada").serialize(),
+          function (data, status) {
+            $("#statusMessage").append(`
+              <div class="alert alert-${status} alert-dismissible fade show" role="alert">
+                <strong>${data}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `);
+            $("#inserirProjeto").trigger("reset");
+            loadData();
+          });
+      };
+
+      function editarIndice(){
+        $.post(meuHost + "/api/indices",
+          $("#editarIndices").serialize(),
+          function (data, status) {
+            $("#statusMessage").append(`
+              <div class="alert alert-${status} alert-dismissible fade show" role="alert">
+                <strong>${data}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `);
+            console.log($("#editarIndices").serialize());
+            $("#editarIndices").trigger("reset");
+            $("#criterio1, #criterio2, #criterio3").html("");
+            loadData();
+          });
+      };
+
+    </script>
+  </body>
+</html>
