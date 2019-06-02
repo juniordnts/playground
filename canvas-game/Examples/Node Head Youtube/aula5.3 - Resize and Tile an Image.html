@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas</title>
+</head>
+<body>
+
+  <canvas id='canvas' style='border: 1px solid; width: 800px; height: 600px;'>
+    Sorry, your browser does not support the canvas tag.
+  </canvas>
+
+  <script>
+
+    // Cache a reference to the html element
+    var canvas = document.getElementById('canvas');
+
+    // Set the drawing surface dimensions to match the canvas
+    canvas.width  = canvas.scrollWidth;
+    canvas.height = canvas.scrollHeight;
+
+    // Get a reference to the 2d drawing context / api
+    var ctx = canvas.getContext('2d');
+
+    // Create an image object
+    var image = new Image();
+
+    // Define our callback
+    image.onload = function(){
+
+      // --------------------------------------------------
+      // Resize large source image using another canvas
+      // --------------------------------------------------
+
+      // Create a temporary (in-memory) canvas
+      var tempCanvas    = document.createElement('canvas');
+      tempCanvas.width  = 200;
+      tempCanvas.height = 112;
+
+      // Ref drawing api 
+      var tempCtx = tempCanvas.getContext('2d');
+
+      // Draw onto the temp canvas
+      tempCtx.drawImage(image, 0, 0, tempCanvas.width, tempCanvas.height);
+
+
+      // --------------------------------------------------
+      // Use the new canvas as the pattern source
+      // --------------------------------------------------
+
+      // Create a pattern object
+      var pattern = ctx.createPattern(tempCanvas, 'repeat');
+
+      // Set fill style
+      ctx.fillStyle = pattern;
+
+      // Fill a rectangle with the pattern
+      ctx.fillRect(10, 10, 200, 200);
+
+      // Fill a circle with the pattern
+      ctx.beginPath();
+      ctx.arc(400, 110, 100, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Start our image loading
+    image.src = './image.png';
+
+  </script>
+
+</body>
+</html>

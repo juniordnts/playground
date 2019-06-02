@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas</title>
+</head>
+<body>
+
+  <canvas id='canvas' style='border: 1px solid; width: 800px; height: 600px;'>
+    Sorry, your browser does not support the canvas tag.
+  </canvas>
+
+  <script>
+
+    // Cache a reference to the html element
+    var canvas = document.getElementById('canvas');
+
+    // Set the drawing surface dimensions to match the canvas
+    canvas.width  = canvas.scrollWidth;
+    canvas.height = canvas.scrollHeight;
+
+    // Get a reference to the 2d drawing context / api
+    var ctx = canvas.getContext('2d');
+
+
+    // ----------------------------------------------------
+    // Circle Type
+    // ----------------------------------------------------
+
+    var Circle = function(x, y, radius) {
+      this.x      = x;
+      this.y      = y;
+      this.radius = radius;
+    }
+
+    // Check if an x,y coordinate is inside the circle
+    Circle.prototype.isHitBy = function(x, y) {
+
+      // Get distance of passed x,y from circle midpoint
+      var distance = Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2));
+
+      // If distance is less than radius, point is in circle
+      return (distance <= this.radius);
+    }
+
+
+    // ----------------------------------------------------
+    // Rectangle Type
+    // ----------------------------------------------------
+
+    var Rectangle = function(x, y, width, height) {
+      this.x      = x;
+      this.y      = y;
+      this.width  = width;
+      this.height = height;
+    }
+
+    // Check if an x,y coordinate is inside the rectangle
+    Rectangle.prototype.isHitBy = function(x, y) {
+
+      // If x or y are within the rectangle bounds, 
+      // point is in the rectangle.
+      return (x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height);
+    }
+
+
+    // ----------------------------------------------------
+    // Create objects and draw
+    // ----------------------------------------------------
+
+    var circle    = new Circle(150, 150, 100);
+    var rectangle = new Rectangle(350, 50, 100, 200);
+
+    ctx.beginPath();
+    ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+
+
+    // ----------------------------------------------------
+    // Add mousemove event listeners
+    // ----------------------------------------------------
+
+    // Watching for mouse move events over the canvas. Change
+    // 'mousemove' to another event if required: e.g. click, 
+    // mousedown, etc. 
+    canvas.addEventListener('mousemove', function(e){
+
+      // Get canvas position on page
+      var canvasBounds = canvas.getBoundingClientRect();
+
+      // Turn click coordinates into canvas coordinates 1
+      // localX and localY renamed from clickX and clickY
+      // in the video (which were bad names!)
+      var localX = e.pageX - canvasBounds.left;
+      var localY = e.pageY - canvasBounds.top;
+
+      // Test circle for hit
+      if (circle.isHitBy(localX, localY)){
+        console.log('Circle hit');
+      }
+
+      // Test rectangle
+      if (rectangle.isHitBy(localX, localY)){
+        console.log('Rectangle hit');
+      }
+    });
+
+
+  </script>
+
+</body>
+</html>

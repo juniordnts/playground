@@ -13,8 +13,8 @@
 <script>
   
   function startGame() {
-    gamePiece = new playerComponent(30, 30, "nave.png", 185, 185);
     background = new backgroundGen();
+    gamePiece = new playerComponent(30, 30, "nave.png", 185, 185);
     canvasArea.start();
   }
 
@@ -72,7 +72,6 @@
     this.newPos = (movX, movY) => {
       this.x -= movX;
       this.y += movY;
-      console.log(this.x, this.y);
     }
   }
 
@@ -115,10 +114,10 @@
       gamePiece.moveAngle = 0;
       gamePiece.speed = 0;
       gamePiece.image.src = "nave.png";
-      if (canvasArea.keys && canvasArea.keys[37]) { gamePiece.moveAngle = -3; gamePiece.image.src = "naveBurn.png" }
-      if (canvasArea.keys && canvasArea.keys[39]) { gamePiece.moveAngle = 3; gamePiece.image.src = "naveBurn.png" }
-      if (canvasArea.keys && canvasArea.keys[38]) { gamePiece.speed = 3; gamePiece.image.src = "naveBurn.png" }
-      if (canvasArea.keys && canvasArea.keys[40]) { gamePiece.speed = -3; gamePiece.image.src = "naveBurn.png" }
+      if (canvasArea.keys && canvasArea.keys[37]) { gamePiece.moveAngle = -3; gamePiece.image.src = "naveBurn.png" } // LEFT
+      if (canvasArea.keys && canvasArea.keys[39]) { gamePiece.moveAngle = 3; gamePiece.image.src = "naveBurn.png" }  // RIGHT
+      if (canvasArea.keys && canvasArea.keys[38]) { gamePiece.speed = 3; gamePiece.image.src = "naveBurn.png" }      // UP
+      if (canvasArea.keys && canvasArea.keys[40]) { gamePiece.speed = -3; gamePiece.image.src = "naveBurn.png" }     // DOWN
 
       // background.newPos();
       background.update();

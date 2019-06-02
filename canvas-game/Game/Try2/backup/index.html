@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas</title>
+</head>
+<body style="text-align: center;">
+
+  <canvas id='canvas' style='border: 1px solid; width: 400px; height: 400px;'></canvas>
+
+  <script>
+
+    var canvas = document.getElementById('canvas');
+    canvas.width  = canvas.scrollWidth;
+    canvas.height = canvas.scrollHeight;
+    var ctx = canvas.getContext('2d');
+
+    // ----------------------------------------------------
+    // Map Generator
+    // ----------------------------------------------------
+
+    var Map = function(){
+
+      this.img = new Image();
+      this.img.src = "./space.png";
+      this.width = 800;
+      this.height = 800;
+      this.x = 0;
+      this.y = 0;
+      this.speed = 0.8;
+    }
+
+    Map.prototype.draw = function() {
+
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rect(-this.x, this.y, this.width, this.height);
+      ctx.fillStyle = ctx.createPattern(this.img, "repeat");;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    var Planet = function () {
+
+      this.img = new Image();
+      this.img.src = "./planet.png";
+      this.width = 60;
+      this.height = 60;
+      this.x = -100;
+      this.y = 170;
+      this.speed = 1;
+    }
+
+    Planet.prototype.draw = function () {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.drawImage(this.img, 0, 0, this.width, this.height);
+      ctx.restore();
+    }
+
+    // ----------------------------------------------------
+    // Listener
+    // ----------------------------------------------------
+
+    var keysDown = {}
+    var Listener = function (delta) {
+      this.animationDeltaTime = 0;
+      window.addEventListener('keydown', function (event) {
+        this.keyDown(event);
+      }.bind(this));
+      window.addEventListener('keyup', function (event) {
+        this.keyUp(event);
+      }.bind(this));
+    }
+    Listener.prototype.keyDown = function (event) {
+           if(event.keyCode == 37){ startMap.x += this.animationDeltaTime * startMap.speed }
+      else if(event.keyCode == 39){ startMap.x -= this.animationDeltaTime * startMap.speed }
+      else if(event.keyCode == 38){ startMap.y += this.animationDeltaTime * startMap.speed }
+      else if(event.keyCode == 40){ startMap.y -= this.animationDeltaTime * startMap.speed }
+    }
+    Listener.prototype.keyUp = function (event) {
+      
+    }
+
+    // ----------------------------------------------------
+    // Animation Runner
+    // ----------------------------------------------------
+
+    var Animation = function(){
+
+      this.boundUpdate = this.tick.bind(this);
+      this.lastAnimationTime = 0;
+    }
+
+    Animation.prototype.tick = function() {
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      var currentAnimationTime = Date.now();
+      var animationDeltaTime   = ((currentAnimationTime - (this.lastAnimationTime || Date.now())) / 1000) * 60;
+      ouve.animationDeltaTime = animationDeltaTime;
+      this.lastAnimationTime = currentAnimationTime;
+
+      
+      // startMap.x += animationDeltaTime * startMap.speed;
+      startMap.draw();
+      // planeta.x += animationDeltaTime * planeta.speed;
+      planeta.draw();
+
+      window.requestAnimationFrame(this.boundUpdate);
+    }
+
+    // ----------------------------------------------------
+    // Start
+    // ----------------------------------------------------
+    
+
+    var startMap = new Map();
+    var animation = new Animation();
+    var planeta = new Planet();
+    var ouve = new Listener();
+    animation.tick();
+
+    // ----------------------------------------------------
+    // Events
+    // ----------------------------------------------------
+
+
+
+
+  </script>
+
+</body>
+</html>

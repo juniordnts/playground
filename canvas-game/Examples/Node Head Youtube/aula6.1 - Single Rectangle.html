@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas</title>
+</head>
+<body>
+
+  <canvas id='canvas' style='border: 1px solid; width: 800px; height: 600px;'>
+    Sorry, your browser does not support the canvas tag.
+  </canvas>
+
+  <script>
+
+    // Cache a reference to the html element
+    var canvas = document.getElementById('canvas');
+
+    // Set the drawing surface dimensions to match the canvas
+    canvas.width  = canvas.scrollWidth;
+    canvas.height = canvas.scrollHeight;
+
+    // Get a reference to the 2d drawing context / api
+    var ctx = canvas.getContext('2d');
+
+    // An object to hold rectangle properties
+    var rectangle = {x: 0, y: 0, width: 100, height: 100};
+
+    // Set fill color
+    ctx.fillStyle = 'red';
+
+    // Function to clear canvas, move rectangles, draw again
+    function update(){
+
+      // Clear the canvas 
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Move the rectangle
+      rectangle.x += 1;
+
+      // Redraw the rectangle
+      ctx.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+
+      // Schedule the next frame
+      window.requestAnimationFrame(update);
+    }
+
+    // Call the first draw
+    update();
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas</title>
+</head>
+<body>
+
+  <canvas id='canvas' style='border: 1px solid; width: 800px; height: 600px;'>
+    Sorry, your browser does not support the canvas tag.
+  </canvas>
+
+  <script>
+
+    // Cache a reference to the html element
+    var canvas = document.getElementById('canvas');
+
+    // Set the drawing surface dimensions to match the canvas
+    canvas.width  = canvas.scrollWidth;
+    canvas.height = canvas.scrollHeight;
+
+    // Get a reference to the 2d drawing context / api
+    var ctx = canvas.getContext('2d');
+
+    // Draw a path of lines with gaps, then stoke [green]
+    ctx.beginPath();
+    ctx.moveTo(100, 100);
+    ctx.lineTo(200, 200);
+    ctx.moveTo(100, 200);
+    ctx.lineTo( 50, 100);
+
+    ctx.strokeStyle = 'green'
+    ctx.stroke();
+
+    // Draw a path of lines with gaps, then fill [broken]
+    ctx.beginPath();
+    ctx.moveTo(400, 100);
+    ctx.lineTo(500, 200);
+    ctx.moveTo(400, 200); // Change to lineTo(400, 200) to fix
+    ctx.lineTo(350, 100);
+
+    ctx.fillStyle = 'red';
+    ctx.fill();
+
+    // Remember this one from the last video?
+    ctx.beginPath();
+    ctx.arc(650, 150, 50, 0, Math.PI / 2);
+    ctx.lineTo(650, 150);
+
+    ctx.fillStyle = 'blue';
+    ctx.fill();
+
+  </script>
+
+</body>
+</html>

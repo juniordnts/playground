@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas</title>
+</head>
+<body>
+
+  <canvas id='canvas' style='border: 1px solid; width: 800px; height: 600px;'>
+    Sorry, your browser does not support the canvas tag.
+  </canvas>
+
+  <script>
+
+    // Cache a reference to the html element
+    var canvas = document.getElementById('canvas');
+
+    // Set the drawing surface dimensions to match the canvas
+    canvas.width  = canvas.scrollWidth;
+    canvas.height = canvas.scrollHeight;
+
+    // Get a reference to the 2d drawing context / api
+    var ctx = canvas.getContext('2d');
+
+
+    // ----------------------------------------------------
+    // Draw quadrant and define hit region
+    // ----------------------------------------------------
+
+    ctx.beginPath();
+    ctx.arc(150, 150, 100, 0, Math.PI / 2);
+    ctx.lineTo(150, 150);
+    ctx.fill();
+    ctx.addHitRegion({id: 'quadrant'});
+
+
+    // ----------------------------------------------------
+    // Draw triangle and define hit region
+    // ----------------------------------------------------
+
+    ctx.beginPath();
+    ctx.moveTo(400, 50);
+    ctx.lineTo(500, 250);
+    ctx.lineTo(300, 250);
+    ctx.fill();
+    ctx.addHitRegion({id: 'triangle'})
+
+
+    // ----------------------------------------------------
+    // Add mousemove event listeners
+    // ----------------------------------------------------
+
+    // Listen for mousemove events
+    canvas.addEventListener('mousemove', function(e){
+
+      // If e.region is set, then the event occurred over
+      // one of our defined regions (contains the region ID)
+      if (e.region){
+        console.log(e.region + ' is hit!');
+      }
+    })
+
+  </script>
+
+</body>
+</html>

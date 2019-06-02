@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas</title>
+</head>
+<body>
+
+  <canvas id='canvas' style='border: 1px solid; width: 800px; height: 600px;'>
+    Sorry, your browser does not support the canvas tag.
+  </canvas>
+
+  <script>
+
+    // Cache a reference to the html element
+    var canvas = document.getElementById('canvas');
+
+    // Set the drawing surface dimensions to match the canvas
+    canvas.width  = canvas.scrollWidth;
+    canvas.height = canvas.scrollHeight;
+
+    // Get a reference to the 2d drawing context / api
+    var ctx = canvas.getContext('2d');
+
+    // ----------------------------------------------------
+    // Animation type
+    // ----------------------------------------------------
+
+    // "Animation" wrapper object
+    var Animation = function(){
+
+      // Explicitly bind update()'s 'this' context and cache in instance property
+      this.boundUpdate = this.update.bind(this);
+
+      this.rectangles = [
+        {x: 0, y:   0, width: 100, height: 100, color: 'red',   speedX:  60},
+        {x: 0, y: 100, width: 100, height: 100, color: 'green', speedX: 180},
+        {x: 0, y: 200, width: 100, height: 100, color: 'blue',  speedX: 120}
+      ];
+
+      // Track frame time
+      this.lastAnimationTime = 0;
+    }
+
+    // Define update loop on the "Animation" prototype
+    Animation.prototype.update = function() {
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Calculate time since last frame
+      var currentAnimationTime = Date.now();
+      var animationDeltaTime   = (currentAnimationTime - (this.lastAnimationTime || Date.now())) / 1000;
+
+      // Reset time for next frame
+      this.lastAnimationTime = currentAnimationTime;
+
+      // Draw all rectangles
+      this.rectangles.forEach(function(rectangle){
+
+        ctx.fillStyle = rectangle.color;
+        ctx.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+
+        // Multiply desired movement by amount of time that has passed.
+        rectangle.x += rectangle.speedX * animationDeltaTime;
+      });
+
+      // Schedule the next "bound" update
+      window.requestAnimationFrame(this.boundUpdate);
+    }
+
+    // ----------------------------------------------------
+    // Start
+    // ----------------------------------------------------
+
+    // Create animation instance and call first update
+    var animation = new Animation();
+    animation.update();
+
+  </script>
+
+</body>
+</html>

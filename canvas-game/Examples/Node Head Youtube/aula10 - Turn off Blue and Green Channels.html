@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas</title>
+</head>
+<body>
+
+  <canvas id='canvas' style='border: 1px solid; width: 800px; height: 600px;'>
+    Sorry, your browser does not support the canvas tag.
+  </canvas>
+
+  <script>
+
+    // Cache a reference to the html element
+    var canvas = document.getElementById('canvas');
+
+    // Set the drawing surface dimensions to match the canvas
+    canvas.width  = canvas.scrollWidth;
+    canvas.height = canvas.scrollHeight;
+
+    // Get a reference to the 2d drawing context / api
+    var ctx = canvas.getContext('2d');
+
+    // ----------------------------------------------------
+    // Create a new image object
+    // ----------------------------------------------------
+
+    var image = new Image();
+
+
+    // ----------------------------------------------------
+    // Code to run when image has loaded
+    // ----------------------------------------------------
+
+    image.onload = function() {
+
+      // Draw image onto canvas (full size)
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+      // Get pixel data from the canvas
+      var pixelData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+      // Iterate over all pixels to modify
+      // Each pixel equals 4 items in the array (r, g, b, a)
+      // 
+      // In this example:
+      // -------------------------------------------------- 
+      // Set the green and blue channels to 0, so we're 
+      // only left with the red channel
+
+      for(var i = 0; i < pixelData.data.length; i += 4) {
+
+        // Set green and blue channels to 0
+        pixelData.data[i + 1] = 0; // g
+        pixelData.data[i + 2] = 0; // b
+      }
+
+      // Put new pixel data back into canvas
+      ctx.putImageData(pixelData, 0, 0);
+
+    };
+
+    // ----------------------------------------------------
+    // Start the image loading
+    // ----------------------------------------------------
+
+    image.src = './image.png';
+
+
+
+
+
+
+
+    // ====================================================
+    // Bad Black and White Conversion
+
+    // for(var i = 0; i < pixelData.data.length; i += 4) {
+
+    //   // Get the average of r, g, and b
+    //   var avg = (pixelData.data[i] + pixelData.data[i + 1] + pixelData.data[i + 2]) / 3;
+
+    //   // Set r, g, and b to the calculated average
+    //   pixelData.data[i]     = avg; // r
+    //   pixelData.data[i + 1] = avg; // g
+    //   pixelData.data[i + 2] = avg; // b
+    // }
+
+    // ====================================================
+    // Better Black and White Conversion
+
+    // for(var i = 0; i < pixelData.data.length; i += 4) {
+
+    //   // Get the weighted "average" of r, g, and b
+    //   var bw = 0.2 * pixelData.data[i] +  0.72 * pixelData.data[i + 1] + 0.07 * pixelData.data[i + 2];
+
+    //   // Set r, g, and b to the calculated "average"
+    //   pixelData.data[i]     = bw; // r
+    //   pixelData.data[i + 1] = bw; // g
+    //   pixelData.data[i + 2] = bw; // b
+    // }
+
+
+    // ====================================================
+    // Invert Colours
+
+    // for(var i = 0; i < pixelData.data.length; i += 4) {
+
+    //   // Subtract each component from 255
+    //   pixelData.data[i ]    = 255 - pixelData.data[i];     // r
+    //   pixelData.data[i + 1] = 255 - pixelData.data[i + 1]; // g
+    //   pixelData.data[i + 2] = 255 - pixelData.data[i + 2]; // b
+    // }
+
+
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas</title>
+</head>
+<body>
+
+  <canvas id='canvas' style='border: 1px solid; width: 800px; height: 600px;'>
+    Sorry, your browser does not support the canvas tag.
+  </canvas>
+
+  <script>
+
+    // Cache a reference to the html element
+    var canvas = document.getElementById('canvas');
+
+    // Set the drawing surface dimensions to match the canvas
+    canvas.width  = canvas.scrollWidth;
+    canvas.height = canvas.scrollHeight;
+
+    // Get a reference to the 2d drawing context / api
+    var ctx = canvas.getContext('2d');
+
+    // Create a new image object
+    var image = new Image();
+
+    // Callback, executed when the image is loaded
+    // See previous video for a more flexible solution 
+    image.onload = function(){
+
+      // Select a rectangle from the source image,
+      // and then draw is as normal.
+      // (image, srcX, srcY, srcWidth, srcHeight, x, y, width, height)
+      ctx.drawImage(image, 0, 0, image.naturalWidth /2, image.naturalHeight/2, 10, 10, 198, 108);
+    }
+
+    // Start the image loading
+    image.src = './image.png';
+
+  </script>
+
+</body>
+</html>

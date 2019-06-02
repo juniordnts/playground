@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    canvas {
+      border: 1px solid #d3d3d3;
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+
+<body onload="startGame()">
+
+  <script>
+
+    var gameArea = {
+      canvas: document.createElement("canvas"),
+      start: function () {
+        this.canvas.width = 400;
+        this.canvas.height = 400;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.interval = setInterval(updateGameArea, 20);
+
+        window.addEventListener('keydown', function (e) {
+          gameArea.keys = (gameArea.keys || []);
+          gameArea.keys[e.keyCode] = (e.type == "keydown");
+        })
+        window.addEventListener('keyup', function (e) {
+          gameArea.keys[e.keyCode] = (e.type == "keydown");
+        })
+      },
+      clear: function () {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      },
+      stop: function () {
+        clearInterval(this.interval);
+      }
+    }
+
+    // =====================================
+
+    function backImage(width, height, imagem, x, y){
+      this.image = new Image();
+      this.image.src = imagem;
+      this.width = width;
+      this.height = height;
+      this.speedX = 0;
+      this.speedY = 0;
+      this.x = x;
+      this.y = y;
+      this.update = function () {
+        ctx = gameArea.context;
+        ctx.drawImage(this.image,this.x,this.y,this.width, this.height);
+        ctx.drawImage(this.image,this.x,this.y - this.height ,this.width, this.height);
+      }
+      this.newPos = function () {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.y == (this.height)) {
+          this.y = 0;
+        }
+      }
+    }
+
+    function playerComponent(width, height, imagem, x, y) {
+      this.image = new Image();
+      this.image.src = imagem;
+      this.width = width;
+      this.height = height;
+      this.speed = 0;
+      this.angle = 0;
+      this.moveAngle = 0;
+      this.x = x;
+      this.y = y;
+      this.update = function () {
+        ctx = gameArea.context;
+        ctx.save();
+        ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+        ctx.rotate(this.angle);
+        ctx.drawImage(this.image, this.width / -2, this.height / -2, this.width, this.height);
+        ctx.restore(); 
+      }
+      this.newPos = function () {
+          this.angle += this.moveAngle * Math.PI / 180;
+          this.x += this.speed * Math.sin(this.angle);
+          this.y -= this.speed * Math.cos(this.angle);
+      }
+      this.crashWith = function (otherobj) {
+        var myleft = this.x; var myright = this.x + (this.width);
+        var mytop = this.y; var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x; var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y; var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+          crash = false;
+        }
+        return crash;
+      }
+    }
+
+    function blockComponent(width, height, color, x, y) {
+      this.width = width;
+      this.height = height;
+      this.speedX = 0;
+      this.speedY = 0;
+      this.x = x;
+      this.y = y;
+      this.update = function () {
+        ctx = gameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+      }
+      this.newPos = function () {
+        this.x += this.speedX;
+        this.y += this.speedY;
+      }
+      // this.crashWith = function (otherobj) {
+      //   var myleft = this.x; var myright = this.x + (this.width);
+      //   var mytop = this.y; var mybottom = this.y + (this.height);
+      //   var otherleft = otherobj.x; var otherright = otherobj.x + (otherobj.width);
+      //   var othertop = otherobj.y; var otherbottom = otherobj.y + (otherobj.height);
+      //   var crash = true;
+      //   if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+      //     crash = false;
+      //   }
+      //   return crash;
+      // }
+    }
+
+    function imgComponent(width, height, imagem, x, y) {
+      this.image = new Image();
+      this.image.src = imagem;
+      this.width = width;
+      this.height = height;
+      this.speed = 0;
+      this.angle = 0;
+      this.moveAngle = 0;
+      this.x = x;
+      this.y = y;
+      this.update = function () {
+        ctx = gameArea.context;
+        ctx.save();
+        ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+        ctx.rotate(this.angle);
+        ctx.drawImage(this.image, this.width / -2, this.height / -2, this.width, this.height);
+        ctx.restore(); 
+      }
+      this.newPos = function () {
+        this.angle += this.moveAngle * Math.PI / 180;
+      }
+      // this.crashWith = function (otherobj) {
+      //   var myleft = this.x; var myright = this.x + (this.width);
+      //   var mytop = this.y; var mybottom = this.y + (this.height);
+      //   var otherleft = otherobj.x; var otherright = otherobj.x + (otherobj.width);
+      //   var othertop = otherobj.y; var otherbottom = otherobj.y + (otherobj.height);
+      //   var crash = true;
+      //   if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+      //     crash = false;
+      //   }
+      //   return crash;
+      // }
+    }
+
+    // =====================================
+
+    function startGame() {
+      gamePiece = new playerComponent(30, 30, "nave.png", 10, 120);
+      blueGamePiece = new imgComponent(80, 80, "spaceTotal.png", 150, 150);
+      background = new backImage(400, 400, "space.png", 0, 0);
+
+      gameArea.start();
+    }
+
+    // =====================================
+
+    function updateGameArea() {
+      if (gamePiece.crashWith(blueGamePiece)) {
+        gameArea.stop();
+      } else {
+        gameArea.clear();
+        
+        background.speedY = 1;
+        background.newPos();    
+        background.update();
+
+          gamePiece.moveAngle = 0;
+          gamePiece.speed = 0;
+          gamePiece.image.src = "nave.png"
+          if (gameArea.keys && gameArea.keys[37]) {gamePiece.moveAngle = -3; gamePiece.image.src = "naveBurn.png"}
+          if (gameArea.keys && gameArea.keys[39]) {gamePiece.moveAngle = 3; gamePiece.image.src = "naveBurn.png"}
+          if (gameArea.keys && gameArea.keys[38]) {gamePiece.speed= 3; gamePiece.image.src = "naveBurn.png"}
+          if (gameArea.keys && gameArea.keys[40]) {gamePiece.speed= -3; gamePiece.image.src = "naveBurn.png"}
+
+        gamePiece.newPos();
+        gamePiece.update();
+
+        blueGamePiece.moveAngle =+ 1;
+        blueGamePiece.newPos();
+        blueGamePiece.update();
+      }
+    }
+
+  // =====================================
+
+  </script>
+
+</body>
+
+</html>
+
+<!-- -- -- -- -- -- -- -- -- -- -- -- -->

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dantas - Login</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="logo.ico" type="image/x-icon">
+	<!-- <link rel="stylesheet" type="text/css" href="assets/materialize.min.css"> -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+
+	<script type="text/javascript" src="assets/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="assets/materialize.min.js"></script>
+</head>
+<body>
+
+	<style type="text/css">
+	body{
+		background-color: #292b36; 
+		position: ; width: 100%; height: 500px;
+		overflow-x: hidden;
+	}
+	input{
+		width: 175px; height: 50px; 
+		border: 0; border-radius: 10px;
+		box-shadow: 0 5px 15px rgba(0,0,0,0.5), inset 0 5px 6px rgba(0,0,0,0.5);
+		margin: 20px auto;
+		text-align: center; font-family: 'Roboto Mono', monospace;
+		font-size: 30px; line-height: 30px;
+	}
+	/* --- */
+	.btn-pass{
+		text-align: center;
+	}
+	.btn-pass button:active{
+		transition: 0.1s;
+		transform: scale(0.95);
+	}
+	.btn-pass button{
+		background-color: #f7f7f7;
+		background-image: linear-gradient(#f7f7f7, #e7e7e7);
+		border-radius: 50%;
+		box-shadow: 0 5px 15px rgba(0,0,0,0.5), inset 0 5px 6px rgba(0,0,0,0.5);
+		border: 0; border-radius: 10px;
+		margin: 5px;
+		width: 50px; height: 50px;
+		font-family: 'Roboto Mono', monospace;
+		font-weight: 800; vertical-align: middle;
+	}
+	.btn-pass button:last-child{
+		width: 115px;
+	}
+	.backsp i{
+		margin: 0px; padding: 0px ;line-height: 20px; font-size: 20px;
+		vertical-align: middle;
+	}
+	/* --- */
+	.btn-login{
+		overflow: hidden;
+		position: relative; top: 0%; left: 50%;
+		transform: translate(-50%, 0%);
+		background-color: #2196f3;
+		border: 0; border-radius: 10px;
+		box-shadow: 0 5px 15px rgba(0,0,0,0.5), inset 0 5px 6px rgba(0,0,0,0.5);
+		width: 170px; height: 50px;
+		font-size: 22px; line-height: 22px;
+		transition: 0.8s;
+		font-family: 'Roboto Mono', monospace;
+	}
+	.btn-login:active{
+		transition: 0.1s;
+		transform: translate(-50%, 0%) scale(0.99);
+	}
+	/* --- */
+	.text { position: relative; }
+	.load { display: none; }
+	.chek { display: none; }
+	.erro { display: none; }
+	.load i{ animation: loading 700ms linear infinite; }
+	.chek i{	animation: scale 0.5s linear;	}
+	.erro i{	animation: scale 0.5s linear;	}
+	@keyframes loading {
+		100% { transform: rotate(360deg); }
+	}
+	@keyframes scale {
+		0% { transform: scale(10); }
+		50% { transform: scale(0.2); }
+		70% { transform: scale(1.2); }
+		90% { transform: scale(0.7); }
+		100% { transform: scale(1); }
+	}
+	img{
+		position: absolute; bottom: 0px; right: 0px; width: 30%; opacity: 0.4; z-index: -1;
+	}
+</style>
+
+<br><br><br>
+
+<div class="" style="text-align: center;">
+	<form>
+		<input class="browser-default" type="password" name="pass" value="" id="senha">
+	</form>
+</div>
+
+<div class="btn-pass">
+	<button class="number">1</button>
+	<button class="number">2</button>
+	<button class="number">3</button><br>
+	<button class="number">4</button>
+	<button class="number">5</button>
+	<button class="number">6</button><br>
+	<button class="number">7</button>
+	<button class="number">8</button>
+	<button class="number">9</button><br>
+	<button class="number">0</button>
+	<button class="backsp"><i class="material-icons">backspace</i></button>
+</div>
+
+<br>
+
+<button class="btn-login" onclick="login()">
+	<span class="text white-text">Login</span>
+	<span class="load"><i class="material-icons white-text">autorenew</i></span>
+	<span class="chek"><i class="material-icons white-text">check</i></span>
+	<span class="erro"><i class="material-icons white-text">close</i></span>
+</button>
+
+<input type="hidden" value="" id="store">
+
+<img src="logo.png">
+
+<script id="script-data"></script>
+
+<script>
+
+// var str = "Hello World!";
+// str = str.substring(0,(str.length - 1));
+// alert(str);
+
+	$(".backsp").click(function(){
+		str = $('#senha').val();
+		$('#senha').val(str.substring(0,(str.length - 1)));
+	});
+
+	$(".number").click(function(){
+		if ($("input").val().length < 8) {
+			var tecla = $(this).text();
+			var texto = $("#senha").val();
+			$('#senha').val(texto + tecla);
+		}
+	});
+
+	var button = $(".btn-login");
+
+	var text = $(".text");
+	var load = $(".load");
+	var chek = $(".chek");
+	var erro = $(".erro");
+
+	function login(){
+
+		if ($(".text").is(":visible")) {
+			text.hide();
+			load.show();
+
+			$("#store").load("http://dnts-test.000webhostapp.com/password-conf/index.txt", function(responseTxt, statusTxt, xhr){
+
+				var data = $("#store").text();
+
+				if(statusTxt == "success"){
+
+					var senha = $('#senha').val();
+
+					if (data == senha){
+						load.hide();
+						erro.hide();
+						chek.show();
+						button.addClass("green");
+						hideAll();
+					} else {
+						load.hide();
+						erro.show();
+						button.addClass("red");
+						hideAll();
+					}
+				}
+				if(statusTxt == "error"){
+					load.hide();
+					erro.show();
+					button.addClass("red");
+					console.log(statusTxt);
+					hideAll();
+					$('#senha').val('');
+				}
+			});
+
+		} else if ($(".load").is(":hidden")) {
+			hideAll();
+		};
+
+
+	}
+
+	function hideAll(){
+		setTimeout(function() {
+			load.hide();
+			chek.hide();
+			erro.hide();
+			text.show();
+			button.removeClass("red"); button.removeClass("green");
+		}, 2000);
+	}
+
+
+</script>
+
+</body>
+</html>
