@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="CCapture.all.min.js"></script>
+
+</head>
+<body>
+
+  
+  <video id="video" controls><source src="movie.mp4" type="video/mp4"></video>
+  
+  <canvas id="canvas"  style="border:1px solid #d3d3d3;"></canvas>
+  
+  <script>
+  
+  // document.getElementById("video").onplay = function(){
+  
+  //   var c = document.getElementById("canvas");
+  //     var ctx = c.getContext("2d");
+  //     var img = document.getElementById("video");
+  //     ctx.drawImage(img, 0, 0);
+  //     var imgData = ctx.getImageData(0, 0, c.width, c.height);
+  //   console.log(imgData);
+  // }
+
+  var vid = document.getElementById("video");
+  var can = document.getElementById("canvas");
+  var ctx = can.getContext("2d");
+  var i;
+
+
+
+  var capturer = new CCapture( {
+    format: 'webm',
+  });
+
+    // capturer.start();
+
+  vid.addEventListener("play", function() {
+    i = window.setInterval(function() {
+      ctx.drawImage(vid,5,5,320,240);
+      // capturer.capture(ctx);
+    },20)
+  ;}, false);
+
+  vid.addEventListener("pause", function() {capturer.save();}, false);
+  vid.addEventListener("ended", function() {clearInterval(i);}, false); 
+
+  
+  </script>
+
+</body>
+</html>
